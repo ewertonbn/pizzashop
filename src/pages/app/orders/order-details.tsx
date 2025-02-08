@@ -20,6 +20,8 @@ import {
   TableRow,
 } from '@/components/ui/table'
 
+import { OrderDetailsSkeleton } from './order-details-skeleton'
+
 interface OrderDetailsProps {
   orderId: string
   open: boolean
@@ -43,7 +45,7 @@ export function OrderdDetails({ orderId, open }: OrderDetailsProps) {
         <DialogDescription>Order details</DialogDescription>
       </DialogHeader>
 
-      {order && (
+      {order ? (
         <div className="space-y-6">
           <Table>
             <TableRow>
@@ -75,7 +77,7 @@ export function OrderdDetails({ orderId, open }: OrderDetailsProps) {
                 Placed ago
               </TableCell>
               <TableCell className="flex justify-end">
-                {formatDistanceToNow(order.createdAt, {
+                {formatDistanceToNow(new Date(order.createdAt), {
                   locale: ptBR,
                   addSuffix: true,
                 })}
@@ -132,6 +134,8 @@ export function OrderdDetails({ orderId, open }: OrderDetailsProps) {
             </TableFooter>
           </Table>
         </div>
+      ) : (
+        <OrderDetailsSkeleton />
       )}
     </DialogContent>
   )
